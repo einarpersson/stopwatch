@@ -7,8 +7,13 @@ const resetBtn = document.getElementById('reset')
 // Globals
 let t0
 let timerId
+let t = 0
+let hasBeenStopped = false
 
 function reset() {
+  t = 0
+  hasBeenStopped = false
+
   startBtn.disabled = false
   stopBtn.disabled = true
   resetBtn.disabled = true
@@ -25,17 +30,24 @@ function formatTimeString(t) {
 }
 
 function start() {
+  if (hasBeenStopped) {
+    t0 = performance.now() - t
+  } else {
+    t0 = performance.now()
+  }
+
   startBtn.disabled = true
   stopBtn.disabled = false
   resetBtn.disabled = true
 
-  t0 = performance.now()
   timerId = setInterval(() => {
-    timeElement.innerText = formatTimeString(performance.now() - t0)
+    t = performance.now() - t0
+    timeElement.innerText = formatTimeString(t)
   }, 5)
 }
 
 function stop() {
+  hasBeenStopped = true
   startBtn.disabled = false
   stopBtn.disabled = true
   resetBtn.disabled = false

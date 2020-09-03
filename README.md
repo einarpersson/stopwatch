@@ -1,2 +1,1 @@
-# stopwatch
-Created with CodeSandbox
+# Basic template for simple web pages
